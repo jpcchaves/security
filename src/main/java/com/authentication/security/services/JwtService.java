@@ -16,15 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtService {
 
-  private static final String SECRET_KEY = "2D4B6150645367566B59703373367639792F423F4528482B4D6251655468576D5A7134743777217A25432646294A404E635266556A586E3272357538782F413F";
+  private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
   }
 
-  private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = extractAllClaims(token);
-
     return claimsResolver.apply(claims);
   }
 
@@ -42,13 +41,13 @@ public class JwtService {
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-        .signWith(getSigninKey(), SignatureAlgorithm.ES512)
+        .signWith(getSignInKey(), SignatureAlgorithm.HS256)
         .compact();
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
     final String username = extractUsername(token);
-    return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
   }
 
   private boolean isTokenExpired(String token) {
@@ -62,13 +61,13 @@ public class JwtService {
   private Claims extractAllClaims(String token) {
     return Jwts
         .parserBuilder()
-        .setSigningKey(getSigninKey())
+        .setSigningKey(getSignInKey())
         .build()
         .parseClaimsJws(token)
         .getBody();
   }
 
-  private Key getSigninKey() {
+  private Key getSignInKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
     return Keys.hmacShaKeyFor(keyBytes);
   }
