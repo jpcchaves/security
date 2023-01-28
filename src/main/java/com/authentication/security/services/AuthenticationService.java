@@ -3,6 +3,7 @@ package com.authentication.security.services;
 import com.authentication.security.models.AuthenticationRequest;
 import com.authentication.security.models.AuthenticationResponse;
 import com.authentication.security.models.RegisterRequest;
+import com.authentication.security.models.RegisterResponse;
 import com.authentication.security.models.user.User;
 import com.authentication.security.models.user.enums.Role;
 import com.authentication.security.repositories.UserRepository;
@@ -22,7 +23,7 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public AuthenticationResponse register(RegisterRequest request) {
+  public RegisterResponse register(RegisterRequest request) {
     var user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
@@ -35,12 +36,12 @@ public class AuthenticationService {
 
     var jwtToken = jwtService.generateToken(user);
 
-    return AuthenticationResponse.builder()
-            .firstname(user.getFirstname())
-            .lastname(user.getLastname())
-            .email(user.getEmail())
-            .token(jwtToken)
-            .build();
+    return RegisterResponse.builder()
+        .firstname(user.getFirstname())
+        .lastname(user.getLastname())
+        .email(user.getEmail())
+        .token(jwtToken)
+        .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
