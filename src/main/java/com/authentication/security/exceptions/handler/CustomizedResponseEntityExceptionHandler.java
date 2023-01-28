@@ -1,6 +1,6 @@
 package com.authentication.security.exceptions.handler;
 
-import com.authentication.security.exceptions.ExceptionResponse;
+import com.authentication.security.exceptions.model.ExceptionResponse;
 import java.util.Date;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

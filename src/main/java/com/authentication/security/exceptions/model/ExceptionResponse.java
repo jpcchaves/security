@@ -1,4 +1,4 @@
-package com.authentication.security.exceptions;
+package com.authentication.security.exceptions.model;
 
 import java.io.Serializable;
 import java.util.Date;
