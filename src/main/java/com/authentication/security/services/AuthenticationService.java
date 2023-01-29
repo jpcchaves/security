@@ -1,9 +1,9 @@
 package com.authentication.security.services;
 
-import com.authentication.security.models.AuthenticationRequest;
-import com.authentication.security.models.AuthenticationResponse;
-import com.authentication.security.models.RegisterRequest;
-import com.authentication.security.models.RegisterResponse;
+import com.authentication.security.data.vo.v1.AuthenticationResponseVO;
+import com.authentication.security.data.vo.v1.RegisterResponseVO;
+import com.authentication.security.models.auth.AuthenticationRequest;
+import com.authentication.security.models.auth.RegisterRequest;
 import com.authentication.security.models.user.User;
 import com.authentication.security.models.user.enums.Role;
 import com.authentication.security.repositories.UserRepository;
@@ -23,7 +23,7 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public RegisterResponse register(RegisterRequest request) {
+  public RegisterResponseVO register(RegisterRequest request) {
     var user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
@@ -36,7 +36,7 @@ public class AuthenticationService {
 
     var jwtToken = jwtService.generateToken(user);
 
-    return RegisterResponse.builder()
+    return RegisterResponseVO.builder()
         .firstname(user.getFirstname())
         .lastname(user.getLastname())
         .email(user.getEmail())
@@ -44,7 +44,7 @@ public class AuthenticationService {
         .build();
   }
 
-  public AuthenticationResponse authenticate(AuthenticationRequest request) {
+  public AuthenticationResponseVO authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
     );
@@ -54,7 +54,7 @@ public class AuthenticationService {
 
     var jwtToken = jwtService.generateToken(user);
 
-    return AuthenticationResponse.builder()
+    return AuthenticationResponseVO.builder()
         .token(jwtToken)
         .build();
   }

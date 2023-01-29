@@ -1,4 +1,4 @@
-package com.authentication.security.models;
+package com.authentication.security.data.vo.v1;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class AuthenticationResponseVO {
 
-  String password;
-  private String email;
-
+  private String token;
 }

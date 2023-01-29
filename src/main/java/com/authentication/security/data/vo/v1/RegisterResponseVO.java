@@ -1,5 +1,6 @@
-package com.authentication.security.models;
+package com.authentication.security.data.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+@JsonPropertyOrder({"firstname", "lastname", "email", "token"})
+public class RegisterResponseVO {
 
+  private String token;
   private String firstname;
   private String lastname;
   private String email;
-  private String password;
 
 }

@@ -1,9 +1,9 @@
 package com.authentication.security.controller.auth;
 
-import com.authentication.security.models.AuthenticationRequest;
-import com.authentication.security.models.AuthenticationResponse;
-import com.authentication.security.models.RegisterRequest;
-import com.authentication.security.models.RegisterResponse;
+import com.authentication.security.data.vo.v1.AuthenticationResponseVO;
+import com.authentication.security.data.vo.v1.RegisterResponseVO;
+import com.authentication.security.models.auth.AuthenticationRequest;
+import com.authentication.security.models.auth.RegisterRequest;
 import com.authentication.security.services.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +24,14 @@ public class AuthenticationController {
   private final AuthenticationService authService;
 
   @PostMapping("/register")
-  public ResponseEntity<RegisterResponse> register(
+  public ResponseEntity<RegisterResponseVO> register(
       @RequestBody RegisterRequest request
   ) {
     return ResponseEntity.ok(authService.register(request));
   }
 
   @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> authenticate(
+  public ResponseEntity<AuthenticationResponseVO> authenticate(
       @RequestBody AuthenticationRequest request
   ) {
     return ResponseEntity.ok(authService.authenticate(request));
