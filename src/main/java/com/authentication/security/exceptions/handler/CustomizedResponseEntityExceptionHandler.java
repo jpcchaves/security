@@ -32,8 +32,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
   public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(
       Exception ex, WebRequest request) {
 
-    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
-        "Forbidden! Invalid or Expired JWT Token!",
+    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
         request.getDescription(false));
 
     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exceptionResponse);
