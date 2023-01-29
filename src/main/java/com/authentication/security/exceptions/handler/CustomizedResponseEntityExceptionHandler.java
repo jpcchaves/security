@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -26,15 +27,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
   }
 
-  @ExceptionHandler(AuthenticationException.class)
+  @ExceptionHandler({AuthenticationException.class})
+  @ResponseBody
   public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(
       Exception ex, WebRequest request) {
 
-    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+        "Forbidden! Invalid or Expired JWT Token!",
         request.getDescription(false));
 
-    return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
-
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exceptionResponse);
   }
 
 }
